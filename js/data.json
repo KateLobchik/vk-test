@@ -1,0 +1,112 @@
+{
+  "data": [
+    {
+      "label": "Фамилия",
+      "inputs": [
+        {
+          "type": "text",
+          "id": "surname",
+          "placeholder": "Иванов",
+          "min": 1,
+          "max": 20,
+          "required": true,
+          "changes": true,
+          "latin": true
+        }
+      ]
+    },
+    {
+      "label": "Имя",
+      "inputs": [
+        {
+          "type": "text",
+          "id": "name",
+          "placeholder": "Иван",
+          "min": 1,
+          "max": 20,
+          "required": true,
+          "changes": true,
+          "latin": true
+        }
+      ]
+    },
+    {
+      "label": "Отчество",
+      "inputs": [
+        {
+          "type": "text",
+          "id": "patronymic",
+          "placeholder": "Иванович",
+          "min": 1,
+          "max": 20,
+          "required": true,
+          "latin": true
+        }
+      ]
+    },
+    {
+      "label": "Дата рождения",
+      "inputs": [
+        {
+          "type": "number",
+          "id": "birth-day",
+          "min": 1,
+          "max": 31,
+          "required": true
+        },
+        {
+          "type": "number",
+          "id": "birth-month",
+          "min": 1,
+          "max": 12,
+          "required": true
+        },
+        {
+          "type": "number",
+          "id": "birth-year",
+          "min": 1921,
+          "max": 2021,
+          "required": true
+        }
+      ]
+    },
+    {
+      "label": "Семейное положение",
+      "inputs": [
+        {
+          "type": "select",
+          "options": [
+            "женат/замужем",
+            "в «гражданском браке»",
+            "разведён",
+            "холост",
+            "вдовец"
+          ],
+          "id": "marital-status"
+        }
+      ]
+    },
+    {
+      "label": "Образование",
+      "inputs": [
+        {
+          "type": "select",
+          "options": [
+            "высшее",
+            "среднее специальное",
+            "среднее",
+            "студент"
+          ],
+          "id": "education"
+        }
+      ]
+    }
+  ],
+  "submit": {
+    "url": "www.example.com",
+    "text": "Полететь на Марс",
+    "rights": true,
+    "rights-text": "Ставя галочку, я подтверждаю, что поставил её в хорошем настроении и в трезвом состоянии"
+  },
+  "theme": true
+}

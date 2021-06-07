@@ -1,0 +1,24 @@
+.visible-hidden {
+  display: none;
+}
+
+
+/**
+Стили для формы
+*/
+.user-form__form {
+  width: 50%;
+  height: auto;
+  background-color: pink;
+  box-sizing: border-box;
+}
+
+.user-form__form fieldset{
+  border: none;
+}
+
+.form__element--submit {
+  width: 100%;
+  background-color: purple;
+  box-sizing: border-box;
+}
