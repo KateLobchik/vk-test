@@ -2,23 +2,53 @@
   display: none;
 }
 
+.user-form__wrapper {
+  width: 60%;
+}
+
 
 /**
 Стили для формы
 */
-.user-form__form {
-  width: 50%;
+
+.tiny-form {
+  width: 100%;
   height: auto;
-  background-color: pink;
   box-sizing: border-box;
 }
 
-.user-form__form fieldset{
+.tiny-form__inputs-wrapper {
+  width: 100%;
+  height: auto;
+  padding: 30px 15%;
+  background-color: pink;
+  background: linear-gradient(to top, #ffe3f580 30%, #ffc4fc7a 66%, #f1c7ef85 100%);
+}
+
+.tiny-form__submit-wrapper {
+  width: 100%;
+  height: auto;
+  padding: 0px 15%;
+  background-color: rgb(182, 188, 219);
+  background: linear-gradient(to top, #978bff79 0%, #b5b4fc77 56%, #dad0ff7c 100%);
+}
+
+.tiny-form__fieldset {
   border: none;
 }
 
-.form__element--submit {
-  width: 100%;
-  background-color: purple;
-  box-sizing: border-box;
+
+/* DARK-THEME*/
+/* .tiny-form--dark-theme {
+  color: white;
+} */
+
+.tiny-form--dark-theme > .tiny-form__inputs-wrapper {
+  background-color: pink;
+  background: linear-gradient(to top, #001c833f 40%, #0072723a 100%);
+}
+
+.tiny-form--dark-theme > .tiny-form__submit-wrapper {
+  background-color: rgb(182, 188, 219);
+  background: linear-gradient(to top, #38022b36 0%, #79106836 50%);
 }
