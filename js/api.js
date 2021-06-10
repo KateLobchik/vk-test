@@ -1,4 +1,9 @@
-const API_URL_FOR_GET_DATA = 'https://raw.githubusercontent.com/KateLobchik/vk-test/master/js/data.json';
+// Использовала демо-сайт для 'обхождения' cors и получения данных из JSON
+// const API_URL_DEMO_CORS = 'https://cors-anywhere.herokuapp.com/';
+// const API_URL_FOR_GET_DATA = 'https://pastebin.com/raw/u2xYtrMp';
+// https://raw.githubusercontent.com/KateLobchik/1418137-keksobooking-22/master/package.json
+const API_URL_FOR_GET_DATA = 'https://raw.githubusercontent.com/KateLobchik/1418137-keksobooking-22/master/package.json';
+
 
 
 fetch(API_URL_FOR_GET_DATA)
@@ -8,11 +13,10 @@ fetch(API_URL_FOR_GET_DATA)
   })
 
 
-
-
 const formContainer = document.querySelector('.tiny-form');
 
-const transliterate = text => {
+
+var transliterate = text => {
 
   text = text
     .replace(/\u0401/g, 'YO')
@@ -212,7 +216,7 @@ const createFormField = fieldform => {
         const inputChanges = document.createElement('input');
         inputChanges.classList.add('tiny-form__input');
         inputChanges.classList.add('tiny-form__input-changes');
-        inputChanges.classList.add('hidden')
+        inputChanges.classList.add('visible-hidden')
         inputChanges.setAttribute('type', 'text');
         inputChanges.setAttribute('name', 'changes');
         inputChanges.setAttribute('min', checkAtributeData(input, 'min'));
@@ -221,7 +225,7 @@ const createFormField = fieldform => {
         lala(inputChanges);
 
         checkbox.addEventListener('change', function (evt) {
-          inputChanges.classList.toggle('hidden');
+          inputChanges.classList.toggle('visible-hidden');
         })
       }
     }
@@ -301,37 +305,22 @@ const createFormField = fieldform => {
     }
 
 
-    const haveDirection = (blockName, rawName) => {
-      if (!fieldset.contains(blockName)) {
-        const rawDirectionWrapper = document.createElement('div');
-        rawDirectionWrapper.classList.add('tiny-form__row-wrapper--' + rawName);
-        fieldset.appendChild(rawDirectionWrapper);
-      }
-    }
-
-    const directedInRow = (input) => {
-      if ("raw" in input) {
-        const rawDirectionWrapper = document.querySelector('.tiny-form__row-wrapper--' + rawName);
-        haveDirection(rawDirectionWrapper, input.raw);
-        rawDirectionWrapper.appendChild(input);
-      }
-      fieldset.appendChild(input);
-    }
-
     const inputField = isInputOrSelect(input);
     validate(inputField, type, min, max);
 
     // Добавление полей с латаницей или без неё
     if ("latin" in input && input.latin === true) {
+
       const latinInputWrapper = document.querySelector('.tiny-form__latin-wrapper');
       if (!fieldset.contains(latinInputWrapper)) {
         const latinInputWrapper = document.createElement('div');
         latinInputWrapper.classList.add('tiny-form__latin-wrapper');
         fieldset.appendChild(latinInputWrapper);
       }
+
       appendInputWithLatin(inputField);
     } else {
-      directedInRow(inputField);
+      fieldset.appendChild(inputField);
       isChanges(input, 'changes');
     }
   })

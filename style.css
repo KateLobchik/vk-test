@@ -9,10 +9,6 @@
   clip: rect(0 0 0 0);
 }
 
-.hidden {
-  display: none;
-}
-
 .user-form__wrapper {
   width: 60%;
 }
@@ -73,10 +69,6 @@
   grid-column-end: 4;
   margin: 7px 0;
   padding: 5px 0 5px 10px;
-}
-
-.tiny-form__input-select {
-  width: 60%;
 }
 
 .tiny-form__changes-wrapper {
