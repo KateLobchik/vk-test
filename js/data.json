@@ -73,7 +73,8 @@
           "placeholder": "12",
           "min": 1,
           "max": 31,
-          "required": true
+          "required": true,
+          "raw": "birthday"
         },
         {
           "type": "number",
@@ -81,7 +82,8 @@
           "placeholder": "01",
           "min": 1,
           "max": 12,
-          "required": true
+          "required": true,
+          "raw": "birthday"
         },
         {
           "type": "number",
@@ -89,7 +91,8 @@
           "placeholder": "1992",
           "min": 1921,
           "max": 2021,
-          "required": true
+          "required": true,
+          "raw": "birthday"
         }
       ]
     },
