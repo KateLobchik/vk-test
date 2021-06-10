@@ -1,6 +1,22 @@
 {
+  "fieldsets": [
+    {
+      "id": "name",
+      "legend": "ФИО"
+    },
+    {
+      "id": "info",
+      "legend": "Дополнительные данные"
+    },
+    {
+      "id": "contacts",
+      "legend": "Контактная информация",
+      "title": true
+    }
+  ],
   "data": [
     {
+      "fieldset": "name",
       "label": "Фамилия",
       "inputs": [
         {
@@ -16,6 +32,7 @@
       ]
     },
     {
+      "fieldset": "name",
       "label": "Имя",
       "inputs": [
         {
@@ -25,15 +42,17 @@
           "min": 1,
           "max": 20,
           "required": true,
-          "changes": true,
+          "changes": false,
           "latin": true
         }
       ]
     },
     {
+      "fieldset": "name",
       "label": "Отчество",
       "inputs": [
         {
+          "fieldset": "name",
           "type": "text",
           "id": "patronymic",
           "placeholder": "Иванович",
@@ -45,11 +64,13 @@
       ]
     },
     {
+      "fieldset": "info",
       "label": "Дата рождения",
       "inputs": [
         {
           "type": "number",
           "id": "birth-day",
+          "placeholder": "12",
           "min": 1,
           "max": 31,
           "required": true
@@ -57,6 +78,7 @@
         {
           "type": "number",
           "id": "birth-month",
+          "placeholder": "01",
           "min": 1,
           "max": 12,
           "required": true
@@ -64,6 +86,7 @@
         {
           "type": "number",
           "id": "birth-year",
+          "placeholder": "1992",
           "min": 1921,
           "max": 2021,
           "required": true
@@ -71,42 +94,71 @@
       ]
     },
     {
+      "fieldset": "info",
       "label": "Семейное положение",
       "inputs": [
         {
           "type": "select",
-          "options": [
-            "женат/замужем",
-            "в «гражданском браке»",
-            "разведён",
-            "холост",
-            "вдовец"
-          ],
+          "options": {
+            "married": "женат/замужем",
+            "civil-marriage": "в «гражданском браке»",
+            "divorced": "разведён",
+            "single": "холост",
+            "widowed": "вдовец"
+          },
           "id": "marital-status"
         }
       ]
     },
     {
+      "fieldset": "info",
       "label": "Образование",
       "inputs": [
         {
           "type": "select",
-          "options": [
-            "высшее",
-            "среднее специальное",
-            "среднее",
-            "студент"
-          ],
+          "options": {
+            "higher": "высшее",
+            "post-secondary-vocational": "среднее специальное",
+            "secondary-school": "среднее",
+            "student": "студент"
+          },
           "id": "education"
+        }
+      ]
+    },
+    {
+      "fieldset": "contacts",
+      "label": "Моб. телефон",
+      "inputs": [
+        {
+          "type": "tel",
+          "id": "tel",
+          "placeholder": "+7",
+          "required": true
+        }
+      ]
+    },
+    {
+      "fieldset": "contacts",
+      "label": "Электронная почта",
+      "inputs": [
+        {
+          "type": "email",
+          "id": "email",
+          "placeholder": "ivanov@gmail.com",
+          "required": true
         }
       ]
     }
   ],
-  "submit": {
-    "url": "www.example.com",
-    "text": "Полететь на Марс",
-    "rights": true,
-    "rights-text": "Ставя галочку, я подтверждаю, что поставил её в хорошем настроении и в трезвом состоянии"
-  },
+  "submits": [
+    {
+      "url": "www.example.com",
+      "type": "submit",
+      "text": "Полететь на Марс",
+      "rights": true,
+      "rightsText": "Ставя галочку, я подтверждаю, что поставил её в хорошем настроении и в трезвом состоянии"
+    }
+  ],
   "theme": true
 }

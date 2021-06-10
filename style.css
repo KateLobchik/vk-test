@@ -1,5 +1,12 @@
 .visible-hidden {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0);
 }
 
 .user-form__wrapper {
@@ -20,35 +27,138 @@
 .tiny-form__inputs-wrapper {
   width: 100%;
   height: auto;
-  padding: 30px 15%;
+  padding: 40px 18% 30px 10%;
   background-color: pink;
-  background: linear-gradient(to top, #ffe3f580 30%, #ffc4fc7a 66%, #f1c7ef85 100%);
+  background: linear-gradient(to top, #fdeef8 0%, #ffe6fe 66%, #ffd5fb 100%);
+  box-sizing: border-box;
 }
 
 .tiny-form__submit-wrapper {
   width: 100%;
   height: auto;
-  padding: 0px 15%;
+  padding: 30px 15%;
   background-color: rgb(182, 188, 219);
-  background: linear-gradient(to top, #978bff79 0%, #b5b4fc77 56%, #dad0ff7c 100%);
+  background: linear-gradient(to top, #c1bcf5 0%, #cfd4ff 56%, #e9e2fd 100%);
+  box-sizing: border-box;
 }
 
 .tiny-form__fieldset {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin: 0;
+  padding: 0;
   border: none;
 }
 
+.tiny-form__latin-wrapper {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin: 20px 0;
+}
+
+.tiny-form__label {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  margin: auto 0;
+}
+
+.tiny-form__input {
+  grid-column-start: 2;
+  grid-column-end: 4;
+  margin: 7px 0;
+  padding: 5px 0 5px 10px;
+}
+
+.tiny-form__changes-wrapper {
+  grid-column-start: 2;
+  grid-column-end: 4;
+}
+
+.tiny-form__checkbox-changes {
+  margin-bottom: 15px;
+}
+
+.tiny-form__checkbox-changes:checked {
+  margin-bottom: 0px;
+}
+
+.tiny-form__input-changes {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
 
 /* DARK-THEME*/
-/* .tiny-form--dark-theme {
-  color: white;
-} */
+
+.tiny-form {
+  position: relative;
+}
+
+.tiny-form__theme-wrapper {
+  position: absolute;
+  top: 40px;
+  right: 55px;
+}
+
+.tiny-form__theme-label {
+  position: relative;
+  cursor: pointer;
+}
+
+.tiny-form__theme-checkbox + .tiny-form__theme-label::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  background-image: url("img/dark-theme-planet.svg");
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: 40px 40px;
+  transform: translate(-50%, -50%);
+}
+
+.tiny-form__theme-checkbox + .tiny-form__theme-label:hover::before {
+  width: 45px;
+  height: 45px;
+  background-size: 45px 45px;
+  transition: all 150ms ease-in-out;
+}
+
+.tiny-form__theme-checkbox:checked + .tiny-form__theme-label::before {
+  background-image: url("img/light-theme-planet.svg");
+}
+
+.tiny-form__theme-checkbox:checked + .tiny-form__theme-label:hover::before {
+  width: 45px;
+  height: 45px;
+  background-size: 45px 45px;
+  transition: all 150ms ease-in-out;
+}
+
+.tiny-form__theme-checkbox:focus + .tiny-form__theme-label::before {
+  width: 45px;
+  height: 45px;
+  border: 1px solid #e665df;
+}
 
 .tiny-form--dark-theme > .tiny-form__inputs-wrapper {
   background-color: pink;
-  background: linear-gradient(to top, #001c833f 40%, #0072723a 100%);
+  background: linear-gradient(to top, #dadbf8 0%, #a7b1d8 60%, #978db1 100%);
 }
 
 .tiny-form--dark-theme > .tiny-form__submit-wrapper {
   background-color: rgb(182, 188, 219);
-  background: linear-gradient(to top, #38022b36 0%, #79106836 50%);
+  background: linear-gradient(to top, #bdadb9 0%, #e2bcdc 56%, #f1d2e7 100%);
 }

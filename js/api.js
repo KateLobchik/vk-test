@@ -1,9 +1,12 @@
 // Использовала демо-сайт для 'обхождения' cors и получения данных из JSON
-const API_URL_DEMO_CORS = 'https://cors-anywhere.herokuapp.com/';
-const API_URL_FOR_GET_DATA = 'https://pastebin.com/raw/u2xYtrMp';
+// const API_URL_DEMO_CORS = 'https://cors-anywhere.herokuapp.com/';
+// const API_URL_FOR_GET_DATA = 'https://pastebin.com/raw/u2xYtrMp';
+// https://raw.githubusercontent.com/KateLobchik/1418137-keksobooking-22/master/package.json
+const API_URL_FOR_GET_DATA = 'https://raw.githubusercontent.com/KateLobchik/1418137-keksobooking-22/master/package.json';
 
 
-fetch(API_URL_DEMO_CORS + API_URL_FOR_GET_DATA)
+
+fetch(API_URL_FOR_GET_DATA)
   .then(response => response.json())
   .then(form => {
     renderSimilarField(form);
@@ -109,7 +112,7 @@ const createFormField = fieldform => {
   const fieldset = document.querySelector('.tiny-form__fieldset-' + fieldform.fieldset);
 
   const lala = (mainInput) => {
-    const latinLabel = document.querySelector('.tiny-form__label-latin')
+    const latinLabel = document.querySelector('.tiny-form__latin-wrapper')
     if (fieldset.contains(latinLabel)) {
       fieldset.insertBefore(mainInput, latinLabel);
     } else {
@@ -195,21 +198,31 @@ const createFormField = fieldform => {
     // Добавления чекбокса и текстового поля для дополнительной информации
     const isChanges = (input, key) => {
       if (key in input && input[key] === true) {
+        const changesInputWrapper = document.createElement('div');
+        changesInputWrapper.classList.add('tiny-form__changes-wrapper');
+        lala(changesInputWrapper);
+
         const checkbox = document.createElement('input');
         checkbox.setAttribute('type', 'checkbox');
-        fieldset.appendChild(checkbox);
+        checkbox.setAttribute('id', 'changes');
+        checkbox.classList.add('tiny-form__checkbox-changes');
+        changesInputWrapper.appendChild(checkbox);
         const checkboxLabel = document.createElement('label');
+        checkboxLabel.setAttribute('for', 'changes');
         checkboxLabel.textContent = 'менялась ранее';
-        fieldset.appendChild(checkboxLabel);
+        checkboxLabel.classList.add('tiny-form__label-changes');
+        changesInputWrapper.appendChild(checkboxLabel);
 
         const inputChanges = document.createElement('input');
+        inputChanges.classList.add('tiny-form__input');
+        inputChanges.classList.add('tiny-form__input-changes');
         inputChanges.classList.add('visible-hidden')
         inputChanges.setAttribute('type', 'text');
         inputChanges.setAttribute('name', 'changes');
         inputChanges.setAttribute('min', checkAtributeData(input, 'min'));
         inputChanges.setAttribute('max', checkAtributeData(input, 'max'));
         inputChanges.setAttribute('placeholder', 'Предыдушая фамилия');
-        fieldset.appendChild(inputChanges);
+        lala(inputChanges);
 
         checkbox.addEventListener('change', function (evt) {
           inputChanges.classList.toggle('visible-hidden');
@@ -228,17 +241,20 @@ const createFormField = fieldform => {
       isRequired(inputName, input);
     }
 
+
     // Добавление полей для данных на латинском
     const appendInputWithLatin = mainInput => {
       lala(mainInput);
       isChanges(input, 'changes');
+
+      const latinInputWrapper = document.querySelector('.tiny-form__latin-wrapper');
 
       const latinInputLabel = document.createElement('label');
       latinInputLabel.classList.add('tiny-form__label');
       latinInputLabel.classList.add('tiny-form__label-latin');
       latinInputLabel.setAttribute('for', fieldform.inputs.id + '-latin');
       latinInputLabel.textContent = fieldform.label + ' латиницей';
-      fieldset.appendChild(latinInputLabel);
+      latinInputWrapper.appendChild(latinInputLabel);
 
       const latinInput = document.createElement('input');
       latinInput.classList.add('tiny-form__input');
@@ -250,11 +266,9 @@ const createFormField = fieldform => {
       latinInput.setAttribute('max', checkAtributeData(input, 'max'));
       latinInput.setAttribute('placeholder', transliterate(checkAtributeData(input, 'placeholder')));
       isRequired(latinInput, input);
-      fieldset.appendChild(latinInput);
+      latinInputWrapper.appendChild(latinInput);
 
       mainInput.addEventListener('input', () => {
-        console.log(mainInput.value);
-        console.log(mainInput.value);
         const latinInput = document.querySelector(`#${(checkAtributeData(input, 'id') + '-latin')}`);
         latinInput.value = transliterate(inputField.value);
       })
@@ -277,8 +291,8 @@ const createFormField = fieldform => {
 
           selectField.appendChild(oneOption);
         })
-
-        selectField.classList.add('tiny-form__select');
+        selectField.classList.add('tiny-form__input');
+        selectField.classList.add('tiny-form__input-select');
         addAtributes(selectField);
         return selectField;
       }
@@ -296,6 +310,14 @@ const createFormField = fieldform => {
 
     // Добавление полей с латаницей или без неё
     if ("latin" in input && input.latin === true) {
+
+      const latinInputWrapper = document.querySelector('.tiny-form__latin-wrapper');
+      if (!fieldset.contains(latinInputWrapper)) {
+        const latinInputWrapper = document.createElement('div');
+        latinInputWrapper.classList.add('tiny-form__latin-wrapper');
+        fieldset.appendChild(latinInputWrapper);
+      }
+
       appendInputWithLatin(inputField);
     } else {
       fieldset.appendChild(inputField);
@@ -306,6 +328,8 @@ const createFormField = fieldform => {
 
 
 const createFormSubmit = (submit, wrapper) => {
+  formContainer.setAttribute("action", submit.url)
+
   const submitButton = document.createElement('button');
   submitButton.classList.add('.tiny-form__submit-button');
   submitButton.setAttribute('type', submit.type);
@@ -327,10 +351,22 @@ const createFormSubmit = (submit, wrapper) => {
 }
 
 const createTheme = () => {
+  const themeWrapper = document.createElement('div');
+  themeWrapper.classList.add('tiny-form__theme-wrapper');
+  themeWrapper.setAttribute('title', 'Изменить тему');
+  formContainer.append(themeWrapper);
+
   const themeButton = document.createElement('input');
-  themeButton.classList.add('.tiny-form__theme-button');
+  themeButton.classList.add('visible-hidden');
+  themeButton.classList.add('tiny-form__theme-checkbox');
   themeButton.setAttribute('type', 'checkbox');
-  formContainer.append(themeButton);
+  themeButton.setAttribute('id', 'theme-button');
+  themeWrapper.append(themeButton);
+
+  const themelabel = document.createElement('label');
+  themelabel.classList.add('tiny-form__theme-label');
+  themelabel.setAttribute('for', 'theme-button');
+  themeWrapper.append(themelabel);
 
   themeButton.addEventListener('change', function (evt) {
     formContainer.classList.toggle('tiny-form--dark-theme');
