@@ -9,6 +9,10 @@
   clip: rect(0 0 0 0);
 }
 
+.hidden {
+  display: none;
+}
+
 .user-form__wrapper {
   width: 60%;
 }
@@ -50,6 +54,13 @@
   border: none;
 }
 
+.tiny-form__fieldset-title {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  margin: 25px 0 5px;
+  text-align: center;
+}
+
 .tiny-form__latin-wrapper {
   grid-column-start: 1;
   grid-column-end: 4;
@@ -68,7 +79,45 @@
   grid-column-start: 2;
   grid-column-end: 4;
   margin: 7px 0;
-  padding: 5px 0 5px 10px;
+  padding: 6px 0 6px 10px;
+  border: none;
+  box-shadow: 0px 1px 1px #7b7480;
+}
+
+.tiny-form__input:hover{
+  outline: 1px solid #2c7a92;
+  box-shadow: 0px 0px 3px 3px white;
+}
+
+.tiny-form__input:focus {
+  outline: 1px solid #283c3d;
+  box-shadow: 0 0 5px 5px white;
+}
+
+.tiny-form__input:invalid {
+  outline: 1px solid #e90046;
+  box-shadow: 0 0 5px 5px white;
+}
+
+.tiny-form__input-select {
+  width: 60%;
+  background: linear-gradient(to bottom, #FFFFFF 20%, #f1f1f1 100%) #fcfbfc repeat-x;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.tiny-form__checkbox:hover {
+  outline: none;
+  box-shadow: 0 0 3px 3px white;
+}
+
+.tiny-form__checkbox:focus {
+  outline: 1px solid #283c3d;
+  box-shadow: 0 0 5px 5px white;
+}
+
+.tiny-form__checkbox:invalid {
+  outline: 1px solid #e90046;
+  box-shadow: 0 0 5px 5px white;
 }
 
 .tiny-form__changes-wrapper {
@@ -89,11 +138,45 @@
   margin-bottom: 20px;
 }
 
+.tiny-form__submit-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
 
+.tiny-form__rights-wrapper {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  padding: 0 10%;
+}
 
+.tiny-form__submit-button {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  width: fit-content;
+  height: fit-content;
+  margin: 45px auto 10px;
+  padding: 15px 18px 15px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #6d6483;
+  border: none;
+  border-radius: 20px;
+  background: rgb(240, 240, 255) linear-gradient(rgb(251, 250, 255), rgb(228, 224, 240));
+  box-shadow: 0px 10px 20px #6d6483;
+  cursor: pointer;
+}
 
+.tiny-form__submit-button:hover,
+.tiny-form__submit-button:focus {
+  outline: none;
+  box-shadow: 0px 10px 20px 5px#6d6483;
+}
 
-
+.tiny-form__submit-button:active {
+  opacity: 0.7;
+}
 
 
 
@@ -150,7 +233,7 @@
 .tiny-form__theme-checkbox:focus + .tiny-form__theme-label::before {
   width: 45px;
   height: 45px;
-  border: 1px solid #e665df;
+  border: 1px solid #2c7a92;
 }
 
 .tiny-form--dark-theme > .tiny-form__inputs-wrapper {

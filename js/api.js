@@ -1,10 +1,4 @@
-// Использовала демо-сайт для 'обхождения' cors и получения данных из JSON
-// const API_URL_DEMO_CORS = 'https://cors-anywhere.herokuapp.com/';
-// const API_URL_FOR_GET_DATA = 'https://pastebin.com/raw/u2xYtrMp';
-// https://raw.githubusercontent.com/KateLobchik/1418137-keksobooking-22/master/package.json
-const API_URL_FOR_GET_DATA = 'https://raw.githubusercontent.com/KateLobchik/1418137-keksobooking-22/master/package.json';
-
-
+const API_URL_FOR_GET_DATA = 'https://raw.githubusercontent.com/KateLobchik/vk-test/master/js/data.json';
 
 fetch(API_URL_FOR_GET_DATA)
   .then(response => response.json())
@@ -17,7 +11,6 @@ const formContainer = document.querySelector('.tiny-form');
 
 
 var transliterate = text => {
-
   text = text
     .replace(/\u0401/g, 'YO')
     .replace(/\u0419/g, 'I')
@@ -100,6 +93,7 @@ const createFieldset = (fieldset, wrapper) => {
 
   if ('title' in fieldset && fieldset.title === true) {
     const title = document.createElement('h3');
+    title.classList.add('tiny-form__fieldset-title');
     title.textContent = fieldset.legend;
     oneFieldset.appendChild(title);
   }
@@ -111,7 +105,7 @@ const createFieldset = (fieldset, wrapper) => {
 const createFormField = fieldform => {
   const fieldset = document.querySelector('.tiny-form__fieldset-' + fieldform.fieldset);
 
-  const lala = (mainInput) => {
+  const appendedBeforeLatin = (mainInput) => {
     const latinLabel = document.querySelector('.tiny-form__latin-wrapper')
     if (fieldset.contains(latinLabel)) {
       fieldset.insertBefore(mainInput, latinLabel);
@@ -125,7 +119,7 @@ const createFormField = fieldform => {
   label.classList.add('tiny-form__label');
   label.setAttribute('for', fieldform.inputs[0].id);
   label.textContent = fieldform.label;
-  lala(label);
+  appendedBeforeLatin(label);
   // fieldset.appendChild(label);
 
 
@@ -146,7 +140,19 @@ const createFormField = fieldform => {
     // Валидация формы
     const isRequired = (inputField, input) => {
       if ('required' in input && input.required === true) {
-        inputField.required = true;
+        inputField.addEventListener('input', () => {
+          inputField.required = true;
+        })
+
+        const requiredFields = [];
+        requiredFields.push(inputField);
+
+        formContainer.addEventListener('submit', (evt) => {
+          evt.preventDefault();
+          requiredFields.forEach(field => {
+            field.setAttribute('required', 'true');
+          });
+        })
       }
     }
 
@@ -200,11 +206,12 @@ const createFormField = fieldform => {
       if (key in input && input[key] === true) {
         const changesInputWrapper = document.createElement('div');
         changesInputWrapper.classList.add('tiny-form__changes-wrapper');
-        lala(changesInputWrapper);
+        appendedBeforeLatin(changesInputWrapper);
 
         const checkbox = document.createElement('input');
         checkbox.setAttribute('type', 'checkbox');
         checkbox.setAttribute('id', 'changes');
+        checkbox.classList.add('tiny-form__checkbox');
         checkbox.classList.add('tiny-form__checkbox-changes');
         changesInputWrapper.appendChild(checkbox);
         const checkboxLabel = document.createElement('label');
@@ -216,16 +223,16 @@ const createFormField = fieldform => {
         const inputChanges = document.createElement('input');
         inputChanges.classList.add('tiny-form__input');
         inputChanges.classList.add('tiny-form__input-changes');
-        inputChanges.classList.add('visible-hidden')
+        inputChanges.classList.add('hidden')
         inputChanges.setAttribute('type', 'text');
         inputChanges.setAttribute('name', 'changes');
         inputChanges.setAttribute('min', checkAtributeData(input, 'min'));
         inputChanges.setAttribute('max', checkAtributeData(input, 'max'));
         inputChanges.setAttribute('placeholder', 'Предыдушая фамилия');
-        lala(inputChanges);
+        appendedBeforeLatin(inputChanges);
 
         checkbox.addEventListener('change', function (evt) {
-          inputChanges.classList.toggle('visible-hidden');
+          inputChanges.classList.toggle('hidden');
         })
       }
     }
@@ -244,7 +251,7 @@ const createFormField = fieldform => {
 
     // Добавление полей для данных на латинском
     const appendInputWithLatin = mainInput => {
-      lala(mainInput);
+      appendedBeforeLatin(mainInput);
       isChanges(input, 'changes');
 
       const latinInputWrapper = document.querySelector('.tiny-form__latin-wrapper');
@@ -304,23 +311,40 @@ const createFormField = fieldform => {
       return inputField;
     }
 
+    const addToRowWrapper = (inputField) => {
+      const rowWrapper = document.querySelector('.tiny-form__row-wrapper--' + input.row);
+      rowWrapper.appendChild(inputField);
+    }
+
+    const DirectedInRow = (inputField) => {
+      if ("row" in input) {
+        const rowWrapper = document.querySelector('.tiny-form__row-wrapper--' + input.row);
+        if (!fieldset.contains(rowWrapper)) {
+          const rowWrapper = document.createElement('div');
+          rowWrapper.classList.add('tiny-form__row-wrapper--' + input.row);
+          fieldset.appendChild(rowWrapper);
+        }
+        addToRowWrapper(inputField);
+      } else {
+        fieldset.appendChild(inputField);
+      }
+    }
+
 
     const inputField = isInputOrSelect(input);
     validate(inputField, type, min, max);
 
     // Добавление полей с латаницей или без неё
     if ("latin" in input && input.latin === true) {
-
       const latinInputWrapper = document.querySelector('.tiny-form__latin-wrapper');
       if (!fieldset.contains(latinInputWrapper)) {
         const latinInputWrapper = document.createElement('div');
         latinInputWrapper.classList.add('tiny-form__latin-wrapper');
         fieldset.appendChild(latinInputWrapper);
       }
-
       appendInputWithLatin(inputField);
     } else {
-      fieldset.appendChild(inputField);
+      DirectedInRow(inputField);
       isChanges(input, 'changes');
     }
   })
@@ -331,22 +355,31 @@ const createFormSubmit = (submit, wrapper) => {
   formContainer.setAttribute("action", submit.url)
 
   const submitButton = document.createElement('button');
-  submitButton.classList.add('.tiny-form__submit-button');
+  submitButton.classList.add('tiny-form__submit-button');
   submitButton.setAttribute('type', submit.type);
   submitButton.textContent = submit.text;
   wrapper.appendChild(submitButton);
 
   if ('rights' in submit && submit.rights === true) {
+    const rightsWrapper = document.createElement('div');
+    rightsWrapper.classList.add('tiny-form__rights-wrapper');
+    wrapper.insertBefore(rightsWrapper, submitButton);
+
     const submitRightsCheckbox = document.createElement('input');
-    submitRightsCheckbox.classList.add('.tiny-form__checkbox-rights');
+    submitRightsCheckbox.classList.add('tiny-form__checkbox');
+    submitRightsCheckbox.classList.add('tiny-form__checkbox-rights');
     submitRightsCheckbox.setAttribute('type', 'checkbox');
-    submitRightsCheckbox.required = true;
-    wrapper.insertBefore(submitRightsCheckbox, submitButton);
+    rightsWrapper.appendChild(submitRightsCheckbox);
 
     const submitCheckboxLabel = document.createElement('label');
-    submitCheckboxLabel.classList.add('.tiny-form__label-rights');
+    submitCheckboxLabel.classList.add('tiny-form__label-rights');
     submitCheckboxLabel.textContent = submit.rightsText;
-    wrapper.insertBefore(submitCheckboxLabel, submitButton);
+    rightsWrapper.appendChild(submitCheckboxLabel);
+
+    formContainer.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      submitRightsCheckbox.required = true;
+    })
   }
 }
 
