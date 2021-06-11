@@ -7,10 +7,12 @@ fetch(API_URL_FOR_GET_DATA)
   })
 
 
+
+
 const formContainer = document.querySelector('.tiny-form');
 
 
-var transliterate = text => {
+const transliterate = text => {
   text = text
     .replace(/\u0401/g, 'YO')
     .replace(/\u0419/g, 'I')
@@ -105,6 +107,7 @@ const createFieldset = (fieldset, wrapper) => {
 const createFormField = fieldform => {
   const fieldset = document.querySelector('.tiny-form__fieldset-' + fieldform.fieldset);
 
+  // Чтобы поля с латиницей находились после основной информации
   const appendedBeforeLatin = (mainInput) => {
     const latinLabel = document.querySelector('.tiny-form__latin-wrapper')
     if (fieldset.contains(latinLabel)) {
@@ -120,7 +123,6 @@ const createFormField = fieldform => {
   label.setAttribute('for', fieldform.inputs[0].id);
   label.textContent = fieldform.label;
   appendedBeforeLatin(label);
-  // fieldset.appendChild(label);
 
 
   // Создание input
@@ -249,7 +251,7 @@ const createFormField = fieldform => {
     }
 
 
-    // Добавление полей для данных на латинском
+    // Добавление полей для данных на латинице
     const appendInputWithLatin = mainInput => {
       appendedBeforeLatin(mainInput);
       isChanges(input, 'changes');
@@ -311,11 +313,11 @@ const createFormField = fieldform => {
       return inputField;
     }
 
+    // Позиционирование смежных полей в строку
     const addToRowWrapper = (inputField) => {
       const rowWrapper = document.querySelector('.tiny-form__row-wrapper--' + input.row);
       rowWrapper.appendChild(inputField);
     }
-
     const DirectedInRow = (inputField) => {
       if ("row" in input) {
         const rowWrapper = document.querySelector('.tiny-form__row-wrapper--' + input.row);
@@ -350,7 +352,7 @@ const createFormField = fieldform => {
   })
 }
 
-
+// Создание Кнопки для отправки данных + соглашение с пользователем
 const createFormSubmit = (submit, wrapper) => {
   formContainer.setAttribute("action", submit.url)
 
@@ -383,6 +385,8 @@ const createFormSubmit = (submit, wrapper) => {
   }
 }
 
+
+// Добавление тёмноё темы
 const createTheme = () => {
   const themeWrapper = document.createElement('div');
   themeWrapper.classList.add('tiny-form__theme-wrapper');
@@ -406,8 +410,10 @@ const createTheme = () => {
   })
 }
 
-
+// Создание формы
 const renderSimilarField = form => {
+
+  // Создание контейнеров для полей формы и кнопок
   const inputsWrapper = document.createElement('div');
   inputsWrapper.classList.add('tiny-form__inputs-wrapper');
   formContainer.appendChild(inputsWrapper);
